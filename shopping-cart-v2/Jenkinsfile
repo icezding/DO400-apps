@@ -1,0 +1,27 @@
+pipeline {
+ agent {
+ node {
+ label 'nodejs'
+ }
+ }
+ parameters {
+ booleanParam(name: "RUN_INTEGRATION_TESTS", defaultValue: true)
+ }
+ stages {
+ stage('Test') {
+ parallel {
+ stage('BUnit tests') {
+ steps {
+ echo "BUnit test step..."
+ }
+ }
+ stage('Integration tests') {
+    when { expression { params.RUN_INTEGRATION_TESTS } }
+ steps {
+ }
+ }
+ }
+ }
+
+ }
+}
